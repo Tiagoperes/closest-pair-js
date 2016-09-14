@@ -10,12 +10,25 @@
 
   function generateRandomArrayOfPoints(min, max, numberOfPoints) {
     var points = [],
+        searchStructure = [],
         i = 0;
+
+    function acknowledge(point) {
+      var index = -min.x + point.x;
+      searchStructure[index] = searchStructure[index] || [];
+      searchStructure[index].push(point.y);
+    }
+
+    function exists(point) {
+      var index = -min.x + point.x;
+      return (searchStructure[index] && !_.includes(searchStructure[index], point.y));
+    }
 
     while (i < numberOfPoints) {
       let p = randomizePoint(min, max);
-      if (!_.find(points, p)) {
+      if (!exists(p, searchStructure)) {
         points.push(p);
+        acknowledge(p);
         i++;
       }
     }

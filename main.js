@@ -1,6 +1,9 @@
 (function () {
   'use strict';
 
+  const MIN = -100000,
+        MAX = 100000;
+
   function getDistance(pair) {
     return Math.sqrt(Math.pow(pair[0].x - pair[1].x, 2) + Math.pow(pair[0].y - pair[1].y, 2));
   }
@@ -22,7 +25,8 @@
   }
 
   function solveRandom(size, bf, printPoints) {
-    var points = closestPair.generateRandomArrayOfPoints({x: -100000, y: -100000}, {x: 100000, y: 100000}, size),
+    var pgStartedAt = new Date().getTime(),
+        points = closestPair.generateRandomArrayOfPoints({x: MIN, y: MIN}, {x: MAX, y: MAX}, size),
         bfStartedAt = new Date().getTime(),
         bfSolution = bf === false || closestPair.bruteForce(points),
         bfEndedAt = new Date().getTime(),
@@ -31,6 +35,7 @@
 
     if (bf !== false) console.log('Brute force solution: ' + JSON.stringify(bfSolution) + '; distance: ' + getDistance(bfSolution));
     console.log('D&C solution: ' + JSON.stringify(dcSolution) + '; distance: ' + getDistance(dcSolution));
+    console.log('Time taken for point generation: ' + (bfStartedAt - pgStartedAt) + 'ms');
     if (bf !== false) console.log('Time taken for brute force: ' + (bfEndedAt - bfStartedAt) + 'ms');
     console.log('Time taken for D&C: ' + (dcEndedAt - bfEndedAt) + 'ms');
     console.log('-----------------------------------------');
