@@ -21,7 +21,7 @@
 
     function exists(point) {
       var index = -min.x + point.x;
-      return (searchStructure[index] && !_.includes(searchStructure[index], point.y));
+      return (searchStructure[index] && _.includes(searchStructure[index], point.y));
     }
 
     while (i < numberOfPoints) {
